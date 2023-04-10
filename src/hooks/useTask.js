@@ -31,5 +31,5 @@ export function useTask() {
     }
 
 
-    return [tasks, addTask, modifyTask, deleteTask];
+    return [tasks, addTask, modTask, deleteTask];
 }

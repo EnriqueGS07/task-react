@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useTask } from "../hooks/useTask";
 import { Task } from "./Task";
 
 
 export const TaskList = (props) => {
-    const {list} = props
+    //const {list} = props
     const [checked, setChecked] = useState([])
+    const [list, newTask, modTask, deleteTask] = useTask();
 
     let checkedCopy = [...checked]
 
