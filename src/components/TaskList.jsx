@@ -11,7 +11,6 @@ export const TaskList = (props) => {
 
     const handleState = (name) =>{
         if(!checked.includes(name.target.id)){
-            console.log("entro");
             checkedCopy = [...checked, name.target.id];
 
         }else{
@@ -26,8 +25,12 @@ export const TaskList = (props) => {
 
 
     useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('list'));
-        setChecked(data);
+        if(localStorage.getItem('list') !== null){
+            const data = JSON.parse(localStorage.getItem('list'));
+            //console.log(data);
+            setChecked(data);
+        }
+        
     }, [])
     
     return (
