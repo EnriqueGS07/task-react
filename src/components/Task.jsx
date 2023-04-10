@@ -6,7 +6,7 @@ export const Task = (props) => {
 
     return(
         <div className={state ? "done": "undonde"}>
-            <input onClick={onCheckClick} type="checkbox" defaultChecked={state} id={name}/>
+            <input onClick={onCheckClick} type="checkbox" checked={state} id={name}/>
             <label htmlFor={name} >{name}: "Descripcion:" {desc}</label>
         </div>
     )
