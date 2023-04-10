@@ -37,7 +37,10 @@ export const TaskList = (props) => {
     
     return (
         <div>
-            <input id="input" type="text" placeholder="new task"/>
+            <input id="input-name" type="text" placeholder="new task name"/>
+            <br />
+            <input id="input-desc" type="text" placeholder="new task descriptin"/>
+            <button id="add" onClick={newTask}>Add task</button>
             <ul>
                 {
                     list.map((task) => (
