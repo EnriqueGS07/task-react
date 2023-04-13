@@ -40,7 +40,6 @@ export const TaskList = () => {
 
     const isFormatValid = Object.keys(formValidation).every((key) => formValidation[key] === "");
 
-    console.log(isFormatValid + " " + formValidation.name)
 
     useEffect(() => {
         if(localStorage.getItem('listChecked') !== null){
