@@ -5,9 +5,10 @@ import { Task } from "./Task";
 
 
 export const TaskList = (props) => {
-    //const {list} = props
-    const [checked, setChecked] = useState([])
+    const [tasks, setTasks] = useState([]);
+    const [checked, setChecked] = useState([]);
     const [list, newTask, modTask, deleteTask] = useTask();
+    
 
     let checkedCopy = [...checked]
 
@@ -20,30 +21,34 @@ export const TaskList = (props) => {
         }    
         setChecked(checkedCopy);
         console.log({checked})    
-        localStorage.setItem("list", JSON.stringify(checkedCopy));
+        localStorage.setItem("listChecked", JSON.stringify(checkedCopy));
     }
 
 
 
-
     useEffect(() => {
-        if(localStorage.getItem('list') !== null){
-            const data = JSON.parse(localStorage.getItem('list'));
-            //console.log(data);
+        if(localStorage.getItem('listChecked') !== null){
+            const data = JSON.parse(localStorage.getItem('listChecked'));
+            console.log(data);
             setChecked(data);
         }
-        
+        if(localStorage.getItem('tasklist') !== null){
+            const data = JSON.parse(localStorage.getItem('tasklist'));
+            console.log(data);
+            setTasks(data);
+        }
     }, [])
     
+
     return (
         <div>
-            <input id="input-name" type="text" placeholder="new task name"/>
+            <input id="input-name" type="text" placeholder="new task name" />
             <br />
             <input id="input-desc" type="text" placeholder="new task descriptin"/>
             <button id="add" onClick={newTask}>Add task</button>
             <ul>
                 {
-                    list.map((task) => (
+                    tasks.map((task) => (
                         <li >
                             <Task name={task.name} 
                             state={checked.includes(task.name)} 

@@ -1,5 +1,5 @@
 export const Header = () => {
     return (
-        <h2>Header</h2>
+        <h2>Task planner</h2>
     )
 }
