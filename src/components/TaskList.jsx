@@ -7,6 +7,10 @@ import { Task } from "./Task";
 export const TaskList = () => {
     const [checked, setChecked] = useState([]);
     const [list, newTask, modTask, deleteTask] = useTask();
+    const [name, setName] = useState([]);
+    const [formValidation, setFormValidation] = useState({
+        name: undefined,
+    })
     
 
     let checkedCopy = [...checked]
@@ -24,6 +28,19 @@ export const TaskList = () => {
     }
 
 
+    function handeChangeName(event){
+        const value = event.target.value;
+        setFormValidation({
+            ...formValidation,
+            name: value.length > 3? "": "The name must be longer",
+        })
+        setName(value);
+    }
+
+
+    const isFormatValid = Object.keys(formValidation).every((key) => formValidation[key] === "");
+
+    console.log(isFormatValid + " " + formValidation.name)
 
     useEffect(() => {
         if(localStorage.getItem('listChecked') !== null){
@@ -35,10 +52,11 @@ export const TaskList = () => {
 
     return (
         <div>
-            <input id="input-name" type="text" placeholder="new task name" />
+            <input id="input-name" onChange={handeChangeName} type="text" placeholder="new task name" />
+            {formValidation.name && <span style={{color:'red'}}>{formValidation.name}</span>}
             <br />
             <input id="input-desc" type="text" placeholder="new task descriptin"/>
-            <button id="add" onClick={newTask}>Add task</button>
+            <button id="add" disabled={!isFormatValid} onClick={newTask}>Add task</button>
             <ul>
                 {
                     list.map((task) => (
@@ -51,6 +69,7 @@ export const TaskList = () => {
                             <button id={task.name +" "+ task.desc + " del"} onClick={deleteTask}>Borrar</button>
                             <button id={task.name +" "+ task.desc + " mod"} onClick={modTask}>editar</button>
                         </li>
+                        
                     ))
                 }
             </ul>

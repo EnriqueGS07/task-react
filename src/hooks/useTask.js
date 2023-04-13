@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export function useTask() {
     const [tasks, setTask] = useState([]);
 
+
     function getNamenDesc(){
         var name = document.getElementById("input-name")
         var desc = document.getElementById("input-desc")
@@ -15,6 +16,7 @@ export function useTask() {
         }
         
     }
+
 
 
     function addTask(){
