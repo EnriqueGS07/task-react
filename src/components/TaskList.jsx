@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useTask } from "../hooks/useTask";
 import { Task } from "./Task";
+import { Button, Flex, Input, ListItem, UnorderedList } from "@chakra-ui/react";
 
 
 export const TaskList = () => {
@@ -50,28 +51,37 @@ export const TaskList = () => {
     
 
     return (
-        <div>
-            <input id="input-name" onChange={handeChangeName} type="text" placeholder="new task name" />
+        <Flex direction="column" alignContent="center" justifyItems="center">
+            <Flex>
+            <Flex width="40%" direction="column">
+            <Input m="8px" id="input-name" onChange={handeChangeName} type="text" placeholder="new task name" />
             {formValidation.name && <span style={{color:'red'}}>{formValidation.name}</span>}
-            <br />
-            <input id="input-desc" type="text" placeholder="new task descriptin"/>
-            <button id="add" disabled={!isFormatValid} onClick={newTask}>Add task</button>
-            <ul>
+            <Input m="8px" id="input-desc" type="text" placeholder="new task descriptin"/>
+            <Button bgColor="red.700" color="white" id="add" disabled={!isFormatValid} onClick={newTask}>Add task</Button>
+            </Flex>
+            <Flex ml="20px">
+                <UnorderedList>
                 {
                     list.map((task) => (
-                        <li key={task.name + task.desc}>
-                            <Task   name={task.name} 
-                            state={checked.includes(task.name)} 
-                            desc={task.desc} 
-                            onCheckClick={handleState}
-                            />
-                            <button id={task.name +" "+ task.desc + " del"} onClick={deleteTask}>Borrar</button>
-                            <button id={task.name +" "+ task.desc + " mod"} onClick={modTask}>editar</button>
-                        </li>
+                        <ListItem key={task.name + task.desc}>
+                            <Flex m="5px" direction="row">
+                                <Task   name={task.name} 
+                                state={checked.includes(task.name)} 
+                                desc={task.desc} 
+                                onCheckClick={handleState}
+                                />
+                                <Flex >
+                                    <Button bgColor="red.700" color="white" ml="10px" mr="10px" id={task.name +" "+ task.desc + " del"} onClick={deleteTask}>Borrar</Button>
+                                    <Button ml="10px" mr="10px" bgColor="red.700" color="white" id={task.name +" "+ task.desc + " mod"} onClick={modTask}>editar</Button>
+                                </Flex>
+                            </Flex>
+                        </ListItem>
                         
                     ))
                 }
-            </ul>
-        </div>
+                </UnorderedList>
+            </Flex>
+            </Flex>
+        </Flex>
     );
 }

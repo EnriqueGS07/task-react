@@ -5,6 +5,7 @@ import { TaskList } from './components/TaskList'
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { Home } from './components/Home';
 import { About } from './components/About';
+import { Button, Flex, ListItem, UnorderedList, useColorMode } from '@chakra-ui/react';
 
 
 
@@ -16,18 +17,23 @@ function App() {
     {name: "task2", desc: "desc2"}
   ];
 
-
+  const { toggleColorMode } = useColorMode();
 
   return (
-    <div className="App">
-      <Header />
+    <Flex ml="100px" alignContent="center" direction="column">
+      <Flex>
+        <Header />
+        <Button bgColor="transparent" m="15px" mt="5px" _hover={{bgColor:"wheat", }} onClick={toggleColorMode}>🌓</Button>
+      </Flex>
       <BrowserRouter>
         <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/task">Tasks</Link></li>
-            <li><Link to="/about">About us</Link></li>
-          </ul>
+          <Flex ml="20px">
+            <UnorderedList >
+              <ListItem  textDecoration="underline" color="blue.600"><Link to="/">Home</Link></ListItem>
+              <ListItem  textDecoration="underline" color="blue.600"><Link to="/task">Tasks</Link></ListItem>
+              <ListItem  textDecoration="underline" color="blue.600"><Link to="/about">About us</Link></ListItem>
+            </UnorderedList>
+          </Flex>
         </nav>
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -35,7 +41,7 @@ function App() {
           <Route path="/task" element={< TaskList />}></Route>
         </Routes>
       </BrowserRouter>
-    </div>
+    </Flex>
   )
 }
 
