@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useTask() {
     const [tasks, setTask] = useState([]);
@@ -24,28 +24,48 @@ export function useTask() {
         localStorage.setItem('tasklist', JSON.stringify(newTasks))
     }
 
-    function modTask(oldTask, newTask){
-        let task = getNamenDesc();
-        let tasksCopy = [...tasks, task];
+    function modTask(oldTask){
+        let newName = prompt("Please the new task name:", oldTask.target.id.split(' ')[0]);
+        if (newName == null || newName == "") {
+            newName = oldTask.target.id.split(' ')[0]
+        }
+        let newDesc = prompt("Please the new task description:", oldTask.target.id.split(' ')[1]);
+        if (newDesc == null || newDesc == "") {
+            newDesc = oldTask.target.id.split(' ')[1]
+        }
+        oldTask = {"name": oldTask.target.id.split(' ')[0], "desc": oldTask.target.id.split(' ')[1]}
+        let newTask = {"name": newName, "desc": newDesc}
+        let tasksCopy = [...tasks];
         let ind = -1;
-        tasksCopy.forEach(t => {
-            if(t == oldTask){
-                ind = tasksCopy.indexOf(t);
+        tasksCopy.forEach(task => {
+            console.log(task.name + " " + task.desc);
+            console.log(oldTask.name + " "+oldTask.desc)
+            if(task.name === oldTask.name && task.desc === oldTask.desc){
+                console.log("entro")
+                ind = tasksCopy.indexOf(task);
             }
         })
         tasksCopy[ind] = newTask;
         setTask(tasksCopy);
-        console.log(tasksCopy);
         localStorage.setItem('tasklist', JSON.stringify(tasksCopy))
     }
 
     function deleteTask(taskToDel){
-        let task = getNamenDesc();
-        let tasksCopy = [...tasks, task];
-        tasksCopy = tasksCopy.filter((task) => t != taskToDel);
+        taskToDel = {"name": taskToDel.target.id.split(' ')[0], "desc": taskToDel.target.id.split(' ')[1]}
+        let tasksCopy = [...tasks];
+        tasksCopy = tasksCopy.filter((task) => task.name !== taskToDel.name && task.desc !== taskToDel.desc);
         setTask(tasksCopy);
         localStorage.setItem('tasklist', JSON.stringify(tasksCopy))
+        
     }
+
+    useEffect(() => {
+        if(localStorage.getItem('tasklist') !== null){
+            const data = JSON.parse(localStorage.getItem('tasklist'));
+            // console.log(data);
+            setTask(data);
+        }
+    },[])
 
 
     return [tasks, addTask, modTask, deleteTask];

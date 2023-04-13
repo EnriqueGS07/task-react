@@ -4,8 +4,7 @@ import { useTask } from "../hooks/useTask";
 import { Task } from "./Task";
 
 
-export const TaskList = (props) => {
-    const [tasks, setTasks] = useState([]);
+export const TaskList = () => {
     const [checked, setChecked] = useState([]);
     const [list, newTask, modTask, deleteTask] = useTask();
     
@@ -29,13 +28,7 @@ export const TaskList = (props) => {
     useEffect(() => {
         if(localStorage.getItem('listChecked') !== null){
             const data = JSON.parse(localStorage.getItem('listChecked'));
-            console.log(data);
             setChecked(data);
-        }
-        if(localStorage.getItem('tasklist') !== null){
-            const data = JSON.parse(localStorage.getItem('tasklist'));
-            console.log(data);
-            setTasks(data);
         }
     }, [])
     
@@ -48,13 +41,15 @@ export const TaskList = (props) => {
             <button id="add" onClick={newTask}>Add task</button>
             <ul>
                 {
-                    tasks.map((task) => (
-                        <li >
-                            <Task name={task.name} 
+                    list.map((task) => (
+                        <li key={task.name + task.desc}>
+                            <Task   name={task.name} 
                             state={checked.includes(task.name)} 
                             desc={task.desc} 
                             onCheckClick={handleState}
                             />
+                            <button id={task.name +" "+ task.desc + " del"} onClick={deleteTask}>Borrar</button>
+                            <button id={task.name +" "+ task.desc + " mod"} onClick={modTask}>editar</button>
                         </li>
                     ))
                 }
